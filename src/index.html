@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="../dist/bundle.js"></script>
+<body>
+    <div class="calculator-container">
+        <div class="calculator_content">
+            <div class="header">
+                <div class="header_tab" id="firstTab">
+                    <img src="./src/assets/icons/little_loan.svg" alt="" class="icon">
+                    <span>До 20 000 ₽</span>
+                </div>
+                <div class="header_tab" id="secondTab">
+                    <img src="./src/assets/icons/large_loan.svg" alt="" class="icon">
+                    <span>До 100 000 ₽</span>
+                </div>
+            </div>
+            <div class="padding_container">
+                <div class="calculator_inputs" id="calculator_inputs">
+                    <div class="input-container">
+                        <label for="loanSumValue" class="main-label">Сумма займа</label>
+                        <input type="text" class="text-input" id="loanSumValue" value="2000" maxlength="6">
+                        <span id="loanSumMock" class="input_mock-container"></span>
+                        <div class="input_range-container">
+                            <label for="loanSumRange">
+                                <input type="range" id="loanSumRange" name="loanSum"
+                                       min="2000" max="100000" step="1000" value="2000" class="input_range">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <label for="loanTimeValue" class="main-label time-label">Срок займа</label>
+                        <div class="date-text-input_row">
+                            <input type="text" class="text-input" id="loanTimeValue" value="7">
+                            <span id="loanTimeMock" class="input_mock-container"></span>
+                        </div>
+                        <div class="input_range-container">
+                            <label for="loanTimeRange"></label>
+                            <input type="range" id="loanTimeRange" name="loanSum"
+                               min="7" max="41" step="1" value="7" class="input_range">
+                        </div>
+                    </div>
+                    <button class="button" id="getLoanButton"></button>
+                </div>
+            </div>
+        </div>
+        <div class="calculator_footer">
+            <div class="footer_item">
+                <span class="footer-item_title">До получения займа</span>
+                <div class="footer-countdown_container">
+                    <img src="./src/assets/icons/clock.svg" alt="" class="icon">
+                    <span id="time_countdown" class="footer-item_content">15:00</span>
+                </div>
+            </div>
+            <div class="footer_item">
+                <span class="footer-item_title">Сегодня получили займ</span>
+                <span id="users_count" class="footer-item_content">1878 клиентов</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
