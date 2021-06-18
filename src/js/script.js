@@ -3,12 +3,12 @@ import { numberWithSpaces, sumRound, timeRound, formattedPeriod } from "./helper
 import {
     MIN_LOAN_AMOUNT,
     MAX_LOAN_AMOUNT,
-    MIN_LOAN_TIME,
-    MAX_LOAN_TIME,
-    TIME_RIGHT_CORNER_VALUE,
-    TIME_LEFT_CORNER_VALUE,
-    AMOUNT_RIGHT_CORNER_VALUE,
-    AMOUNT_LEFT_CORNER_VALUE
+    MIN_LOAN_DAYS_TIME,
+    MAX_LOAN_DAYS_TIME,
+    MIN_LOAN_MONTHS_TIME,
+    MAX_LOAN_MONTHS_TIME,
+    MAX_LOAN_AMOUNT_BY_DAYS,
+    MIN_LOAN_AMOUNT_BY_MONTHS
 } from './constants';
 
 const inputContainers = document.querySelectorAll('.input-container');
@@ -58,7 +58,7 @@ const today = new Date();
 const isMonthRangeActive = () => loanSumRangeDays.style.opacity === '0';
 const isDaysRangeActive = () => loanSumRangeMonths.style.opacity === '0';
 
-loanTimeMock.innerText = `${MIN_LOAN_TIME} ${formattedPeriod(MIN_LOAN_TIME, true)}`;
+loanTimeMock.innerText = `${MIN_LOAN_DAYS_TIME} ${formattedPeriod(MIN_LOAN_DAYS_TIME, true)}`;
 
 // Логика скрытия мока и отображения инпута
 loanSumMock.onclick = () => {
@@ -139,17 +139,17 @@ const setRightInputsActive = () => {
 
 const setLeftInputValues = (value) => {
     loanSumRangeDays.value = value;
-    loanSumRangeMonths.value = 21000;
-    loanTimeRangeDays.value = 30;
-    loanTimeRangeMonths.value = 2;
+    loanSumRangeMonths.value = MIN_LOAN_AMOUNT_BY_MONTHS;
+    loanTimeRangeDays.value = MAX_LOAN_DAYS_TIME;
+    loanTimeRangeMonths.value = MIN_LOAN_MONTHS_TIME;
     console.log('triggered lEFT');
 }
 
 const setRightInputValues = (value) => {
     loanSumRangeMonths.value = value;
-    loanSumRangeDays.value = 2000;
-    loanTimeRangeDays.value = 30;
-    loanTimeRangeMonths.value = 2;
+    loanSumRangeDays.value = MIN_LOAN_AMOUNT;
+    loanTimeRangeDays.value = MAX_LOAN_DAYS_TIME;
+    loanTimeRangeMonths.value = MIN_LOAN_MONTHS_TIME;
     console.log('triggered RIGHT');
 }
 
@@ -159,7 +159,7 @@ const setDaysRanges = (value) => {
     setLeftInputsActive();
     setLeftInputValues(value);
     setSumText(loanSumRangeDays.value);
-    setTimeText(30);
+    setTimeText(MAX_LOAN_DAYS_TIME);
 }
 
 const setMonthsRanges = (value) => {
@@ -168,7 +168,7 @@ const setMonthsRanges = (value) => {
     setRightInputsActive();
     setRightInputValues(value);
     setSumText(loanSumRangeMonths.value);
-    setTimeText(2);
+    setTimeText(MIN_LOAN_MONTHS_TIME);
 }
 
 // Переключение табов
@@ -188,7 +188,7 @@ const setSecondTabActive = (value) => {
 
 // Прослушка действий с первым табом
 firstTabObserver.subscribe(() => {
-    setFirstTabActive(20000);
+    setFirstTabActive(MAX_LOAN_AMOUNT_BY_DAYS );
 });
 firstTab.onclick = (event) => {
     event.stopPropagation();
@@ -197,7 +197,7 @@ firstTab.onclick = (event) => {
 
 // Прослушка действий с вторым табом
 secondTabObserver.subscribe(() => {
-    setSecondTabActive(21000);
+    setSecondTabActive(MIN_LOAN_AMOUNT_BY_MONTHS);
 });
 secondTab.onclick = (event) => {
     event.stopPropagation();
@@ -209,11 +209,12 @@ loanSumObserver.subscribe(value => {
     setSumText(value);
 });
 
+// Валидация вводимой суммы
 const validateLoanSum = (currentValue) => {
-    if(currentValue < 2000 || isNaN(currentValue)) {
-        currentValue = 2000;
-    } else if(currentValue > 100000) {
-        currentValue = 100000;
+    if(currentValue < MIN_LOAN_AMOUNT || isNaN(currentValue)) {
+        currentValue = MIN_LOAN_AMOUNT;
+    } else if(currentValue > MAX_LOAN_AMOUNT) {
+        currentValue = MAX_LOAN_AMOUNT;
     } else {
         if(currentValue % 1000 !== 0) {
             currentValue = sumRound(currentValue);
@@ -223,11 +224,10 @@ const validateLoanSum = (currentValue) => {
 };
 
 
-
 loanSumText.onchange = (event) => {
     const currentValue = event.target.value;
     const validatedSum = validateLoanSum(currentValue);
-    if(currentValue > 20000) {
+    if(currentValue > MAX_LOAN_AMOUNT_BY_DAYS ) {
         setSecondTabActive(validatedSum);
     } else {
         setFirstTabActive(validatedSum);
@@ -239,7 +239,7 @@ loanSumRangeDays.oninput = (event) => {
     if(isMonthRangeActive()) {
         setFirstTabActive(currentValue);
     }
-    if(currentValue > 20000) {
+    if(currentValue > MAX_LOAN_AMOUNT_BY_DAYS ) {
         console.log('WORKED')
         setSecondTabActive(currentValue);
         console.log(document.activeElement);
@@ -252,7 +252,7 @@ loanSumRangeMonths.oninput = (event) => {
     if(isDaysRangeActive()) {
         setSecondTabActive(currentValue);
     }
-    if(currentValue <= 20000) {
+    if(currentValue <= MAX_LOAN_AMOUNT_BY_DAYS ) {
         setFirstTabActive(currentValue);
         loanSumRangeDays.focus();
     }
@@ -268,10 +268,10 @@ loanTimeObserver.subscribe(value => {
 loanTimeRangeDays.oninput = (event) => {
     const currentValue = event.target.value;
     if(isMonthRangeActive()) {
-        setFirstTabActive(20000);
+        setFirstTabActive(MAX_LOAN_AMOUNT_BY_DAYS );
     }
-    if(currentValue >= 31) {
-        setSecondTabActive(21000);
+    if(currentValue > MAX_LOAN_DAYS_TIME) {
+        setSecondTabActive(MIN_LOAN_AMOUNT_BY_MONTHS);
     }
 
     loanTimeObserver.broadcast(currentValue);
@@ -280,30 +280,30 @@ loanTimeRangeDays.oninput = (event) => {
 loanTimeRangeMonths.oninput = (event) => {
     const currentValue = event.target.value;
     if(isDaysRangeActive()) {
-        setSecondTabActive(21000);
+        setSecondTabActive(MIN_LOAN_AMOUNT_BY_MONTHS);
     }
     if(currentValue <= 1 && isMonthRangeActive()) {
-        setFirstTabActive(20000);
+        setFirstTabActive(MAX_LOAN_AMOUNT_BY_DAYS );
     }
     loanTimeObserver.broadcast(currentValue);
 }
 
-
+// Валидация вводимого времени
 const validateLoanTime = (currentValue) => {
     if(isDaysRangeActive()) {
-        if(currentValue < 7 || isNaN(currentValue)) {
-            currentValue = 7;
-        } else if(currentValue > 30) {
-            setSecondTabActive(21000);
-            currentValue = 2;
+        if(currentValue < MIN_LOAN_DAYS_TIME || isNaN(currentValue)) {
+            currentValue = MIN_LOAN_DAYS_TIME;
+        } else if(currentValue > MAX_LOAN_DAYS_TIME) {
+            setSecondTabActive(MIN_LOAN_AMOUNT_BY_MONTHS);
+            currentValue = MIN_LOAN_MONTHS_TIME;
         }
     }
     if(isMonthRangeActive()) {
-        if(currentValue < 2) {
-            setFirstTabActive(20000);
-            currentValue = 30;
-        } else if(currentValue > 12 || isNaN(currentValue)) {
-            currentValue = 12;
+        if(currentValue < MIN_LOAN_MONTHS_TIME) {
+            setFirstTabActive(MAX_LOAN_AMOUNT_BY_DAYS );
+            currentValue = MAX_LOAN_DAYS_TIME;
+        } else if(currentValue > MAX_LOAN_MONTHS_TIME || isNaN(currentValue)) {
+            currentValue = MAX_LOAN_MONTHS_TIME;
         }
     }
     return timeRound(currentValue);
@@ -316,7 +316,7 @@ loanTimeText.onchange = (event) => {
 }
 
 // confirmButton.onclick = () => {
-//     const tariffId = loanTimeText.value >= TIME_RIGHT_CORNER_VALUE ? 3 : 2;
+//     const tariffId = loanTimeText.value >= TIME_RIGHT_CORNER_VALUE ? 3 : MIN_LOAN_MONTHS_TIME;
 //     const utm = window.location.search.replace(/^\?/, '');
 //     const amount = loanSumText.value;
 //     const totalDays = loanTimeText.value;
