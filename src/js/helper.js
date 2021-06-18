@@ -16,6 +16,22 @@ export const getCorrectDeclension = (value, words) => {
 }
 
 const daysWithDeclension = ['день', 'дня', 'дней'];
+const monthsWithDeclension = ['месяц', 'месяца', 'месяцев'];
 
-export const formattedDays = (value) => getCorrectDeclension(value, daysWithDeclension);
+export const formattedPeriod = (value, isDaysPeriod) => {
+    if(isDaysPeriod) {
+        return getCorrectDeclension(value, daysWithDeclension);
+    }
+    return getCorrectDeclension(value, monthsWithDeclension);
+}
 
+Date.prototype.addDays = (days) => {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+Date.prototype.addMonths = (months) => {
+    const date = new Date(this.valueOf());
+    date.setMonth(date.getMonth() + months + 1)
+}

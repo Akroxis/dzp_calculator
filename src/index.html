@@ -26,21 +26,29 @@
                         <span id="loanSumMock" class="input_mock-container"></span>
                         <div class="input_range-container">
                             <label for="loanSumRange">
-                                <input type="range" id="loanSumRange" name="loanSum"
-                                       min="2000" max="100000" step="1000" value="2000" class="input_range">
+                                <div class="time_range_container">
+                                    <input type="range" id="loanSumRange" name="loanSum"
+                                           min="2000" max="21000" step="1000" value="2000" class="input_range">
+                                    <input type="range" id="loanSumRangeMonths" name="loanSum"
+                                           min="20000" max="100000" step="1000" value="21000" class="input_range large-loan">
+                                </div>
                             </label>
                         </div>
                     </div>
                     <div class="input-container">
-                        <label for="loanTimeValue" class="main-label time-label">Срок займа</label>
+                        <label for="loanTimeValue" class="main-label time-label" id="loanTimeLabel">Срок займа</label>
                         <div class="date-text-input_row">
                             <input type="text" class="text-input" id="loanTimeValue" value="7">
                             <span id="loanTimeMock" class="input_mock-container"></span>
                         </div>
                         <div class="input_range-container">
                             <label for="loanTimeRange"></label>
-                            <input type="range" id="loanTimeRange" name="loanSum"
-                               min="7" max="41" step="1" value="7" class="input_range">
+                            <div class="time_range_container">
+                                <input type="range" id="loanTimeRange" name="loanSum"
+                                       min="7" max="31" step="1" value="7" class="input_range_days">
+                                <input type="range" id="loanTimeRangeMonths" name="loanSum"
+                                       min="1" max="12" step="1" value="2" class="input_range_months large-loan">
+                            </div>
                         </div>
                     </div>
                     <button class="button" id="getLoanButton"></button>

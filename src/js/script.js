@@ -1,5 +1,5 @@
 import EventObserver from "./observer";
-import { numberWithSpaces, sumRound, timeRound, formattedDays } from "./helper";
+import { numberWithSpaces, sumRound, timeRound, formattedPeriod } from "./helper";
 import {
     MIN_LOAN_AMOUNT,
     MAX_LOAN_AMOUNT,
@@ -11,20 +11,26 @@ import {
     AMOUNT_LEFT_CORNER_VALUE
 } from './constants';
 
+const inputContainers = document.querySelectorAll('.input-container');
+
 // Моки для текстовых инпутов
 const loanSumMock = document.getElementById('loanSumMock');
 const loanTimeMock = document.getElementById('loanTimeMock');
 
 // Инпуты суммы займа
-const loanSumRange = document.getElementById('loanSumRange');
+const loanSumRangeDays = document.getElementById('loanSumRange');
+const loanSumRangeMonths = document.getElementById('loanSumRangeMonths');
 const loanSumText = document.getElementById('loanSumValue');
 
-// Инпуты срока займа
-const loanTimeRange = document.getElementById('loanTimeRange');
+// Инпуты времени займа
+const loanTimeRangeDays = document.getElementById('loanTimeRange');
+const loanTimeRangeMonths = document.getElementById('loanTimeRangeMonths');
 const loanTimeText = document.getElementById('loanTimeValue');
 
 // Кнопка получения суммы
 const confirmButton = document.getElementById('getLoanButton');
+
+const loanTimeLabel = document.getElementById('loanTimeLabel');
 
 // Табы
 const firstTab = document.getElementById('firstTab');
@@ -41,12 +47,18 @@ const loanTimeObserver = new EventObserver();
 const formattedMinLoanAmount = numberWithSpaces(MIN_LOAN_AMOUNT);
 confirmButton.innerText = `ПОЛУЧИТЬ ${formattedMinLoanAmount} ₽`;
 firstTab.classList.add('little-loan');
+loanSumRangeDays.style.opacity = '1';
+loanSumRangeMonths.style.opacity = '0';
+loanTimeRangeDays.style.opacity = '1';
+loanTimeRangeMonths.style.opacity = '0';
 loanSumMock.innerText = `${formattedMinLoanAmount} ₽`;
-loanTimeMock.innerText = `${MIN_LOAN_TIME} ${formattedDays(MIN_LOAN_TIME)}`;
+const today = new Date();
 
-// Переменные для хранения текущих значений инпутов перед новым вводом
-let currentLoanSum = MIN_LOAN_AMOUNT;
-let currentLoanTime = MIN_LOAN_TIME;
+
+const isMonthRangeActive = () => loanSumRangeDays.style.opacity === '0';
+const isDaysRangeActive = () => loanSumRangeMonths.style.opacity === '0';
+
+loanTimeMock.innerText = `${MIN_LOAN_TIME} ${formattedPeriod(MIN_LOAN_TIME, true)}`;
 
 // Логика скрытия мока и отображения инпута
 loanSumMock.onclick = () => {
@@ -56,27 +68,28 @@ loanSumMock.onclick = () => {
     loanSumText.setSelectionRange(inputLength, inputLength);
 };
 loanTimeMock.onclick = () => {
-    const inputLength = loanTimeText.value.length
-    loanTimeMock.style.display = 'block';
+    const inputLength = loanTimeText.value.length;
+    loanTimeMock.style.display = 'none';
     loanTimeText.focus();
     loanTimeText.setSelectionRange(inputLength, inputLength);
 }
 
 // Запись значений инпутов (для корректной смены рендж-инпутов)
-loanSumText.onfocus = (event) => {
-    currentLoanSum = event.target.value;
+loanSumText.onfocus = () => {
     loanSumMock.style.display = 'none';
 };
-loanTimeText.onfocus = (event) => {
-    currentLoanTime = event.target.value;
+
+loanSumText.onblur = () => {
+    loanSumMock.style.display = 'block';
+}
+
+loanTimeText.onfocus = () => {
     loanTimeMock.style.display = 'none';
-};
-loanSumRange.onfocus = (event) => {
-    currentLoanSum = event.target.value;
-};
-loanTimeRange.onfocus = (event) => {
-    currentLoanTime = event.target.value;
-};
+}
+
+loanTimeText.onblur = () => {
+    loanTimeMock.style.display = 'block';
+}
 
 
 // Изменение текста кнопки
@@ -85,57 +98,97 @@ const setButtonText = (value) => {
 };
 
 // Изменение текста мока суммы
-const setSumMockText = (value) => {
+const setSumText = (value) => {
     loanSumMock.innerText = `${numberWithSpaces(value)} ₽`;
+    loanSumText.value = value;
+    setButtonText(value);
 };
 
 // Изменение текста мока времени
-const setTimeMockText = (value) => {
-    loanTimeMock.innerText = `${value} ${formattedDays(value)}`
+const setTimeText = (value) => {
+    loanTimeMock.innerText = `${value} ${formattedPeriod(value, Number(isDaysRangeActive()))}`;
+    loanTimeText.value = value;
+    if(isDaysRangeActive()) {
+        loanTimeLabel.innerText = 'Срок займа';
+        loanTimeLabel.style.width = '80px';
+    } else {
+        loanTimeLabel.innerText = 'Срок займа в месяцах'
+        loanTimeLabel.style.width = '160px';
+    }
+}
+
+const setLeftInputsActive = () => {
+    loanSumRangeDays.style.opacity = '1';
+    loanSumRangeMonths.style.opacity = '0';
+    loanTimeRangeDays.style.opacity = '1';
+    loanTimeRangeMonths.style.opacity = '0';
+    inputContainers.forEach(container => {
+        container.style.borderBottom = '1px solid #D6D6D6';
+    })
+}
+
+const setRightInputsActive = () => {
+    loanSumRangeDays.style.opacity = '0';
+    loanSumRangeMonths.style.opacity = '1';
+    loanTimeRangeDays.style.opacity = '0';
+    loanTimeRangeMonths.style.opacity = '1';
+    inputContainers.forEach(container => {
+        container.style.borderBottom = '2px solid #ffc800';
+    })
+}
+
+const setLeftInputValues = (value) => {
+    loanSumRangeDays.value = value;
+    loanSumRangeMonths.value = 21000;
+    loanTimeRangeDays.value = 30;
+    loanTimeRangeMonths.value = 2;
+    console.log('triggered lEFT');
+}
+
+const setRightInputValues = (value) => {
+    loanSumRangeMonths.value = value;
+    loanSumRangeDays.value = 2000;
+    loanTimeRangeDays.value = 30;
+    loanTimeRangeMonths.value = 2;
+    console.log('triggered RIGHT');
+}
+
+const setDaysRanges = (value) => {
+    loanSumRangeDays.focus();
+    loanSumRangeMonths.blur();
+    setLeftInputsActive();
+    setLeftInputValues(value);
+    setSumText(loanSumRangeDays.value);
+    setTimeText(30);
+}
+
+const setMonthsRanges = (value) => {
+    loanSumRangeDays.blur();
+    loanSumRangeMonths.focus();
+    setRightInputsActive();
+    setRightInputValues(value);
+    setSumText(loanSumRangeMonths.value);
+    setTimeText(2);
 }
 
 // Переключение табов
-const setFirstTabActive = () => {
+const setFirstTabActive = (value) => {
     firstTab.classList.add('little-loan');
     secondTab.classList.remove('large-loan');
     confirmButton.classList.remove('large-loan');
-    loanSumRange.classList.remove('large-loan');
-    loanTimeRange.classList.remove('large-loan');
+    setDaysRanges(value);
 };
-const setSecondTabActive = () => {
+const setSecondTabActive = (value) => {
     firstTab.classList.remove('little-loan');
     secondTab.classList.add('large-loan');
     confirmButton.classList.add('large-loan');
-    loanSumRange.classList.add('large-loan');
-    loanTimeRange.classList.add('large-loan');
+    setMonthsRanges(value);
 };
 
-// Выставление левых границ суммы/срока займа
-const setLeftCornerValues = () => {
-    loanSumText.value = AMOUNT_LEFT_CORNER_VALUE;
-    loanSumRange.value = AMOUNT_LEFT_CORNER_VALUE;
-    loanTimeText.value = TIME_LEFT_CORNER_VALUE;
-    loanTimeRange.value = TIME_LEFT_CORNER_VALUE;
-    setButtonText(AMOUNT_LEFT_CORNER_VALUE);
-    setSumMockText(AMOUNT_LEFT_CORNER_VALUE);
-    setTimeMockText(TIME_LEFT_CORNER_VALUE);
-};
-
-// Выставление правых границ суммы/срока займа
-const setRightCornerValues = () => {
-    loanSumText.value = AMOUNT_RIGHT_CORNER_VALUE;
-    loanSumRange.value = AMOUNT_RIGHT_CORNER_VALUE;
-    loanTimeText.value = TIME_RIGHT_CORNER_VALUE;
-    loanTimeRange.value = TIME_RIGHT_CORNER_VALUE;
-    setButtonText(AMOUNT_RIGHT_CORNER_VALUE);
-    setSumMockText(AMOUNT_RIGHT_CORNER_VALUE);
-    setTimeMockText(TIME_RIGHT_CORNER_VALUE);
-};
 
 // Прослушка действий с первым табом
 firstTabObserver.subscribe(() => {
-    setFirstTabActive();
-    setLeftCornerValues();
+    setFirstTabActive(20000);
 });
 firstTab.onclick = (event) => {
     event.stopPropagation();
@@ -144,167 +197,132 @@ firstTab.onclick = (event) => {
 
 // Прослушка действий с вторым табом
 secondTabObserver.subscribe(() => {
-    setSecondTabActive();
-    setRightCornerValues();
+    setSecondTabActive(21000);
 });
 secondTab.onclick = (event) => {
     event.stopPropagation();
     secondTabObserver.broadcast();
 };
 
-// Установка суммы займа
-const setLoanSumValues = (value) => {
-    loanSumText.value = value;
-    loanSumRange.value = value;
-    setButtonText(value);
-    setSumMockText(value);
-};
-
-// Установка времени займа
-const setLoanTimeValues = (value) => {
-    loanTimeText.value = value;
-    loanTimeRange.value = value;
-    setTimeMockText(value);
-};
-
-// Проверка того, что предыдущее и новое значения суммы/времени находятся по разную сторону левой и правой границ всего ренджа
-const validateSumsForRange = () => (currentLoanSum <= AMOUNT_LEFT_CORNER_VALUE && loanSumText.value >= AMOUNT_RIGHT_CORNER_VALUE) ||
-    (currentLoanSum <= AMOUNT_LEFT_CORNER_VALUE && loanSumRange.value >= AMOUNT_RIGHT_CORNER_VALUE) ||
-    (currentLoanSum >= AMOUNT_RIGHT_CORNER_VALUE && loanSumText.value <= AMOUNT_LEFT_CORNER_VALUE) ||
-    (currentLoanSum >= AMOUNT_RIGHT_CORNER_VALUE && loanSumRange.value <= AMOUNT_LEFT_CORNER_VALUE);
-const validateTimesForRange = () => (currentLoanTime <= TIME_LEFT_CORNER_VALUE && loanTimeText.value >= TIME_RIGHT_CORNER_VALUE) ||
-    (currentLoanTime <= TIME_LEFT_CORNER_VALUE && loanTimeRange.value >= TIME_RIGHT_CORNER_VALUE) ||
-    (currentLoanTime >= TIME_RIGHT_CORNER_VALUE && loanTimeText.value <= TIME_LEFT_CORNER_VALUE) ||
-    (currentLoanTime >= TIME_RIGHT_CORNER_VALUE && loanTimeRange.value <= TIME_LEFT_CORNER_VALUE);
-
-// Смена рендж-инпута времени в зависимости от суммы, сопутствующая смена текста кнопки/табов
-const setActualLoanTime = (value) => {
-    if (value < AMOUNT_RIGHT_CORNER_VALUE) {
-        loanTimeRange.value = TIME_LEFT_CORNER_VALUE;
-        loanTimeText.value = TIME_LEFT_CORNER_VALUE;
-        setFirstTabActive();
-    }
-    if(value >= AMOUNT_RIGHT_CORNER_VALUE) {
-        loanTimeRange.value = TIME_RIGHT_CORNER_VALUE;
-        loanTimeText.value = TIME_RIGHT_CORNER_VALUE;
-        setSecondTabActive();
-    }
-    setSumMockText(value);
-    setTimeMockText(loanTimeText.value);
-    setButtonText(value);
-};
-
 // Подписка на изменения суммы
 loanSumObserver.subscribe(value => {
-    const validationResult = validateSumsForRange();
-    setLoanSumValues(value);
-    if(validationResult) {
-        setActualLoanTime(value);
-    }
+    setSumText(value);
 });
 
-// Валидация инпута суммы: соответствие диапазону, округление до ближайшей тысячи, проверка на NaN
-const setCorrectLoanSum = (currentValue) => {
-    if(currentValue < MIN_LOAN_AMOUNT || isNaN(currentValue)) {
-        currentValue = MIN_LOAN_AMOUNT;
-    } else if(currentValue > MAX_LOAN_AMOUNT) {
-        currentValue = MAX_LOAN_AMOUNT;
+const validateLoanSum = (currentValue) => {
+    if(currentValue < 2000 || isNaN(currentValue)) {
+        currentValue = 2000;
+    } else if(currentValue > 100000) {
+        currentValue = 100000;
     } else {
         if(currentValue % 1000 !== 0) {
             currentValue = sumRound(currentValue);
         }
     }
-    loanSumObserver.broadcast(currentValue);
+    return currentValue;
 };
 
-// Прослушка действий с суммой займа
-// Валидация суммы займа по завершению ввода
-loanSumText.oninput = (event) => {
-    loanSumObserver.broadcast(event.target.value)
-};
+
+
 loanSumText.onchange = (event) => {
-    let currentValue = event.target.value;
-    setCorrectLoanSum(currentValue);
-};
-loanSumText.onblur = (event) => {
-    let currentValue = event.target.value;
-    loanSumMock.style.display = 'block';
-    setCorrectLoanSum(currentValue);
-};
-loanSumRange.onchange = (event) => {
-    loanSumObserver.broadcast(event.target.value)
-};
-loanSumRange.oninput = (event) => {
-    loanSumObserver.broadcast(event.target.value)
-};
-
-
-// Смена рендж-инпута суммы в зависимости от времени, сопутствующая смена текста кнопки/табов
-const setActualLoanSum = (value) => {
-    if(value >= TIME_RIGHT_CORNER_VALUE) {
-        loanSumText.value = AMOUNT_RIGHT_CORNER_VALUE;
-        loanSumRange.value = AMOUNT_RIGHT_CORNER_VALUE;
-        setSumMockText(AMOUNT_RIGHT_CORNER_VALUE);
-        setSecondTabActive();
+    const currentValue = event.target.value;
+    const validatedSum = validateLoanSum(currentValue);
+    if(currentValue > 20000) {
+        setSecondTabActive(validatedSum);
+    } else {
+        setFirstTabActive(validatedSum);
     }
-    if(value <= TIME_LEFT_CORNER_VALUE) {
-        loanSumText.value = AMOUNT_LEFT_CORNER_VALUE;
-        loanSumRange.value = AMOUNT_LEFT_CORNER_VALUE;
-        setSumMockText(AMOUNT_LEFT_CORNER_VALUE);
-        setFirstTabActive();
+}
+
+loanSumRangeDays.oninput = (event) => {
+    const currentValue = event.target.value;
+    if(isMonthRangeActive()) {
+        setFirstTabActive(currentValue);
     }
-    setTimeMockText(value);
-    setButtonText(loanSumText.value);
-};
+    if(currentValue > 20000) {
+        console.log('WORKED')
+        setSecondTabActive(currentValue);
+        console.log(document.activeElement);
+    }
+    loanSumObserver.broadcast(currentValue);
+}
+
+loanSumRangeMonths.oninput = (event) => {
+    const currentValue = event.target.value;
+    if(isDaysRangeActive()) {
+        setSecondTabActive(currentValue);
+    }
+    if(currentValue <= 20000) {
+        setFirstTabActive(currentValue);
+        loanSumRangeDays.focus();
+    }
+    loanSumObserver.broadcast(currentValue);
+}
+
 
 // Подписка на время займа
 loanTimeObserver.subscribe(value => {
-    const validationResult = validateTimesForRange();
-    setLoanTimeValues(value);
-    if(validationResult) {
-        setActualLoanSum(value)
-    }
+    setTimeText(value);
 });
 
-
-// Валидация инпута времени: соответствие диапазону, округление до ближайшего целого, проверка на NaN
-const setCorrectLoanTime = (currentValue) => {
-    if(currentValue < MIN_LOAN_TIME || isNaN(currentValue)) {
-        currentValue = MIN_LOAN_TIME;
+loanTimeRangeDays.oninput = (event) => {
+    const currentValue = event.target.value;
+    if(isMonthRangeActive()) {
+        setFirstTabActive(20000);
     }
-    if(currentValue > MAX_LOAN_TIME) {
-        currentValue = MAX_LOAN_TIME;
+    if(currentValue >= 31) {
+        setSecondTabActive(21000);
     }
-    loanTimeObserver.broadcast(timeRound(currentValue))
-};
 
-// Прослушка действий с временем займа
-loanTimeText.oninput = (event) => {
-    loanTimeObserver.broadcast(event.target.value)
-};
+    loanTimeObserver.broadcast(currentValue);
+}
+
+loanTimeRangeMonths.oninput = (event) => {
+    const currentValue = event.target.value;
+    if(isDaysRangeActive()) {
+        setSecondTabActive(21000);
+    }
+    if(currentValue <= 1 && isMonthRangeActive()) {
+        setFirstTabActive(20000);
+    }
+    loanTimeObserver.broadcast(currentValue);
+}
+
+
+const validateLoanTime = (currentValue) => {
+    if(isDaysRangeActive()) {
+        if(currentValue < 7 || isNaN(currentValue)) {
+            currentValue = 7;
+        } else if(currentValue > 30) {
+            setSecondTabActive(21000);
+            currentValue = 2;
+        }
+    }
+    if(isMonthRangeActive()) {
+        if(currentValue < 2) {
+            setFirstTabActive(20000);
+            currentValue = 30;
+        } else if(currentValue > 12 || isNaN(currentValue)) {
+            currentValue = 12;
+        }
+    }
+    return timeRound(currentValue);
+}
+
 loanTimeText.onchange = (event) => {
-    let currentValue = event.target.value;
-    setCorrectLoanTime(currentValue);
-};
-loanTimeText.onblur = (event) => {
-    let currentValue = event.target.value;
-    loanTimeMock.style.display = 'block';
-    setCorrectLoanTime(currentValue);
-    setButtonText(loanSumText.value);
-};
-loanTimeRange.onchange = (event) => {
-    loanTimeObserver.broadcast(event.target.value);
-};
-loanTimeRange.oninput = (event) => {
-    loanTimeObserver.broadcast(event.target.value);
-};
+    const currentValue = event.target.value;
+    const validatedTime = validateLoanTime(currentValue);
+    loanTimeObserver.broadcast(validatedTime);
+}
 
-
+// confirmButton.onclick = () => {
+//     const tariffId = loanTimeText.value >= TIME_RIGHT_CORNER_VALUE ? 3 : 2;
+//     const utm = window.location.search.replace(/^\?/, '');
+//     const amount = loanSumText.value;
+//     const totalDays = loanTimeText.value;
+//     const period = loanTimeText.value;
+//     window.location.href = `my.dozarplati.com/take-loan?c_period=${period}&c_amount=${amount}&c_days=${totalDays}&c_tariff=${tariffId}&${utm}`;
+// };
 confirmButton.onclick = () => {
-    const tariffId = loanTimeText.value >= TIME_RIGHT_CORNER_VALUE ? 3 : 2;
-    const utm = window.location.search.replace(/^\?/, '');
-    const amount = loanSumText.value;
-    const totalDays = loanTimeText.value;
-    const period = loanTimeText.value;
-    window.location.href = `my.dozarplati.com/take-loan?c_period=${period}&c_amount=${amount}&c_days=${totalDays}&c_tariff=${tariffId}&${utm}`;
-};
+    console.log(loanTimeText.value, loanSumText.value);
+}
