@@ -50,7 +50,7 @@ export const addDays = (days) => {
 
 export const addMonths = (months) => {
   const date = new Date()
-  const increasedMonth = date.getMonth() + Number(months) + 1
+  const increasedMonth = date.getMonth() + Number(months)
   const resultDate = date.setMonth(increasedMonth)
   return new Date(resultDate)
 }
