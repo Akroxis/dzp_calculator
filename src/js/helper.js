@@ -25,13 +25,15 @@ export const formattedPeriod = (value, isDaysPeriod) => {
     return getCorrectDeclension(value, monthsWithDeclension);
 }
 
-Date.prototype.addDays = (days) => {
-    const date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-
-Date.prototype.addMonths = (months) => {
-    const date = new Date(this.valueOf());
-    date.setMonth(date.getMonth() + months + 1)
+export const getFormattedDate = (today) => {
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    if(day < 10) {
+        day = `0${day}`;
+    }
+    if(month < 10) {
+        month = `0${month}`
+    }
+    return `${year}-${month}-${day}`;
 }

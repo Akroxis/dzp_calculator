@@ -1,5 +1,5 @@
 import EventObserver from "./observer";
-import { numberWithSpaces, sumRound, timeRound, formattedPeriod } from "./helper";
+import {numberWithSpaces, sumRound, timeRound, formattedPeriod, getFormattedDate} from "./helper";
 import {
     MIN_LOAN_AMOUNT,
     MAX_LOAN_AMOUNT,
@@ -27,6 +27,24 @@ const loanTimeRangeDays = document.getElementById('loanTimeRange');
 const loanTimeRangeMonths = document.getElementById('loanTimeRangeMonths');
 const loanTimeText = document.getElementById('loanTimeValue');
 
+const datePicker = document.getElementById('datePicker');
+
+const today = new Date();
+const firstPeriod = new Date(today.setDate(today.getDate() + 7));
+const minDatePickerValue = firstPeriod;
+const lastPeriod = new Date(today.setDate(today.getDate() + 30));
+const maxDatePickerValue = lastPeriod;
+datePicker.setAttribute('min', getFormattedDate(minDatePickerValue));
+console.log(getFormattedDate(maxDatePickerValue));
+datePicker.setAttribute('max', getFormattedDate(maxDatePickerValue));
+
+datePicker.setAttribute('value', getFormattedDate(today))
+
+datePicker.onchange = (event) => {
+    console.log(new Date(event.target.value), today);
+}
+
+
 // Кнопка получения суммы
 const confirmButton = document.getElementById('getLoanButton');
 
@@ -52,7 +70,6 @@ loanSumRangeMonths.style.opacity = '0';
 loanTimeRangeDays.style.opacity = '1';
 loanTimeRangeMonths.style.opacity = '0';
 loanSumMock.innerText = `${formattedMinLoanAmount} ₽`;
-const today = new Date();
 
 
 const isMonthRangeActive = () => loanSumRangeDays.style.opacity === '0';
@@ -111,6 +128,9 @@ const setTimeText = (value) => {
     if(isDaysRangeActive()) {
         loanTimeLabel.innerText = 'Срок займа';
         loanTimeLabel.style.width = '80px';
+        const dd = new Date();
+        const dateForSelect = new Date(dd.setDate(dd.getDate() + Number(loanTimeText.value)));
+        datePicker.setAttribute('value', getFormattedDate(dateForSelect));
     } else {
         loanTimeLabel.innerText = 'Срок займа в месяцах'
         loanTimeLabel.style.width = '160px';
@@ -142,7 +162,6 @@ const setLeftInputValues = (value) => {
     loanSumRangeMonths.value = MIN_LOAN_AMOUNT_BY_MONTHS;
     loanTimeRangeDays.value = MAX_LOAN_DAYS_TIME;
     loanTimeRangeMonths.value = MIN_LOAN_MONTHS_TIME;
-    console.log('triggered lEFT');
 }
 
 const setRightInputValues = (value) => {
@@ -150,7 +169,6 @@ const setRightInputValues = (value) => {
     loanSumRangeDays.value = MIN_LOAN_AMOUNT;
     loanTimeRangeDays.value = MAX_LOAN_DAYS_TIME;
     loanTimeRangeMonths.value = MIN_LOAN_MONTHS_TIME;
-    console.log('triggered RIGHT');
 }
 
 const setDaysRanges = (value) => {
@@ -240,9 +258,7 @@ loanSumRangeDays.oninput = (event) => {
         setFirstTabActive(currentValue);
     }
     if(currentValue > MAX_LOAN_AMOUNT_BY_DAYS ) {
-        console.log('WORKED')
         setSecondTabActive(currentValue);
-        console.log(document.activeElement);
     }
     loanSumObserver.broadcast(currentValue);
 }
