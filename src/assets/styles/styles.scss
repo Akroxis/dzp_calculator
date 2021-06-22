@@ -12,20 +12,20 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
-.calculator-container {
+.calculator {
   width: 380px;
   height: 483px;
   border-radius: 4px;
   background-color: #FFFFFF;
 }
 
-.padding_container {
+.inputs-wrapper {
   padding: 49px 32px 24px 32px;
   border-top: 1px solid #ECECEF;
   border-bottom: 1px solid #ECECEF;
 }
 
-.header {
+.main-content-header {
   display: flex;
   flex-flow: row nowrap;
   height: 55px;
@@ -33,7 +33,7 @@ html, body {
   padding: 0 46px 2px 32px;
 }
 
-.header_tab {
+.main-content-header__tab {
   cursor: pointer;
   width: 151px;
   height: 56px;
@@ -71,11 +71,11 @@ html, body {
   }
 }
 
-.icon {
+.calculator-content__icon {
   margin-right: 10px;
 }
 
-.input-container {
+.calculator-input {
   display: flex;
   flex-flow: column nowrap;
   border: 1px solid #D6D6D6;
@@ -86,7 +86,7 @@ html, body {
   margin-bottom: 44px;
 }
 
-.text-input {
+.calculator-input__text {
   border: none;
   outline: none;
   width: 50%;
@@ -101,7 +101,7 @@ html, body {
   color: #4E4E64;
 }
 
-.input_mock-container {
+.calculator-input__mock {
   font-family: 'Roboto', sans-serif;
   position: absolute;
   border: none;
@@ -118,7 +118,7 @@ html, body {
   color: #4E4E64;
 }
 
-.date-text-input_row {
+.date-calculator-input__text_row {
   display: flex;
   flex-flow: row nowrap;
 }
@@ -135,7 +135,7 @@ html, body {
   align-items: center;
 }
 
-.main-label {
+.calculator-input__label {
   position: absolute;
   top: -10px;
   left: 15px;
@@ -149,21 +149,21 @@ html, body {
   color: #A2A2B2;
 }
 
-.time-label {
+.time__label {
   width: 80px;
 }
 
-.time_range_container {
+.calculator-input__range {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.input_range {
+.input__range {
   width: 100%;
 }
 
 
-.button {
+.calculator__button {
   background: #57B560;
   color: #fff;
   height: 56px;
@@ -173,7 +173,6 @@ html, body {
   border-radius: 4px;
   border: none;
   cursor: pointer;
-  font-family: 'Roboto', sans-serif;
 
   &.large-loan {
     color: #4e4e64;
@@ -182,7 +181,7 @@ html, body {
 }
 
 
-.calculator_footer {
+.calculator-footer {
   display: flex;
   flex-flow: row nowrap;
   height: 82px;
@@ -191,12 +190,12 @@ html, body {
   margin-top: 16px;
 }
 
-.footer_item {
+.calculator-footer__item {
   display: flex;
   flex-flow: column nowrap;
 }
 
-.footer-item_title {
+.footer__item__title {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -206,7 +205,7 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
-.footer-item_content {
+.footer__item__text {
   font-style: normal;
   font-weight: normal;
   font-size: 21px;
@@ -214,7 +213,7 @@ html, body {
   color: #4E4E64;
 }
 
-.footer-countdown_container {
+.footer__countdown {
   display: flex;
   flex-flow: row nowrap;
 }
@@ -427,13 +426,28 @@ input[type=range].large-loan {
   }
 }
 
-input[type=date] {
-  input {
-    width: 0;
+.datepicker-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+  margin-right: 18px;
+  margin-left: auto;
+
+  span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: right;
+    color: #A0A0A0;
+    margin-right: 10px;
   }
 
-  &::-webkit-datetime-edit {
-    width: 264px;
+
+  .qs-datepicker-container {
+    width: 366px;
     margin: auto;
     font-size: 12px;
     border-radius: 4px;
@@ -441,18 +455,119 @@ input[type=date] {
     box-shadow: 0 2px 16px 0 rgb(0 0 0 / 8%);
     border: 1px solid #ececef;
     box-sizing: border-box;
+
+    span {
+      font-size: 16px;
+      font-weight: normal;
+      color: #211E27;
+    }
   }
 
-  &::-webkit-calendar-picker-indicator {
-    color: transparent;
-    opacity: 1;
-    background: url('../icons/calendar.svg') no-repeat center;
-    background-size: contain;
+  .qs-month-year {
+    font-weight: normal;
+    transition: none;
   }
 
-  &::-webkit-datetime-edit-year-field:not([aria-valuenow]),
-  &::-webkit-datetime-edit-month-field:not([aria-valuenow]),
-  &::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
-    color: transparent;
+  .qs-month {
+    margin-right: 0;
+  }
+
+  .qs-datepicker {
+    width: 366px;
+  }
+
+  .qs-month-year:hover {
+    border: none;
+  }
+
+  .qs-controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ececef;
+    height: 57px;
+    background: transparent;
+
+    .qs-arrow {
+      width: 33px;
+      height: 33px;
+    }
+
+    .qs-arrow.qs-left::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      border: 1px solid #a0a0a0;
+      border-right: none;
+      border-bottom: none;
+      transform: translate3d(-30%,-50%,0) rotate(
+                      -45deg
+      );
+    }
+
+    .qs-arrow.qs-right::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      border: 1px solid #a0a0a0;
+      border-right: none;
+      border-bottom: none;
+      transform: translate3d(-80%,-50%,0) rotate(135deg);
+    }
+  }
+
+  .qs-squares {
+    padding: 8px 0 8px 14px;
+    font-size: 16px;
+
+    .qs-empty {
+      width: 22px;
+    }
+
+    .qs-outside-current-month {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .qs-day {
+      width: 33px;
+      height: 33px;
+      margin: 0 7px;
+      line-height: 24px;
+      text-align: center;
+      font-weight: normal;
+      color: #211E27;
+    }
+
+    .qs-num {
+      width: 33px;
+      height: 33px;
+      margin: 0 7px;
+    }
+
+    .qs-current {
+      text-decoration: none;
+      font-weight: normal;
+      color: #ffc800;
+      opacity: 1;
+    }
+
+    .qs-active {
+      background-color: #ffc800;
+      color: #1e1e28;
+      pointer-events: none;
+    }
+
+    .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {
+      background: transparent;
+    }
   }
 }

@@ -6,12 +6,19 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack serve",
+    "lint": "eslint",
     "dev": "webpack --mode development --watch"
   },
   "author": "Devim",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^5.2.6",
+    "eslint": "^7.29.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
@@ -25,5 +32,8 @@
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
     "webpack-shell-plugin-next": "^2.2.2"
+  },
+  "dependencies": {
+    "js-datepicker": "^5.18.0"
   }
 }
