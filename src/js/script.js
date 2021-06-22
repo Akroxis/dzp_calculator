@@ -18,7 +18,13 @@ import {
   MIN_LOAN_MONTHS_TIME,
   MAX_LOAN_MONTHS_TIME,
   MAX_LOAN_AMOUNT_BY_DAYS,
-  MIN_LOAN_AMOUNT_BY_MONTHS
+  MIN_LOAN_AMOUNT_BY_MONTHS,
+  LOAN_TIME_DAYS_LABEL_TEXT,
+  LOAN_TIME_MONTHS_LABEL_TEXT,
+  LOAN_TIME_DAYS_LABEL_WIDTH,
+  LOAN_TIME_MONTHS_LABEL_WIDTH,
+  LITTLE_LOAN_CLASS_NAME,
+  LARGE_LOAN_CLASS_NAME
 } from './constants'
 
 const inputContainers = document.querySelectorAll('.calculator-input')
@@ -40,6 +46,10 @@ const loanTimeText = document.getElementById('loanTimeValue')
 const dateSpan = document.getElementById('date-value')
 
 const setDateSpanText = (value) => dateSpan.innerText = value
+// Изменение текста кнопки
+const setButtonText = (value) => {
+  confirmButton.innerText = `ПОЛУЧИТЬ ${numberWithSpaces(value)} ₽`
+}
 const datePickerNode = document.getElementById('datePicker-input')
 const hideDatePickerIcon = () => datePickerNode.style.display = 'none'
 const showDatePickerIcon = () => datePickerNode.style.display = 'block'
@@ -58,17 +68,6 @@ const firstTabObserver = new EventObserver()
 const secondTabObserver = new EventObserver()
 const loanSumObserver = new EventObserver()
 const loanTimeObserver = new EventObserver()
-
-// INIT-значения
-const formattedMinLoanAmount = numberWithSpaces(MIN_LOAN_AMOUNT)
-confirmButton.innerText = `ПОЛУЧИТЬ ${formattedMinLoanAmount} ₽`
-firstTab.classList.add('little-loan')
-loanSumRangeDays.style.opacity = '1'
-loanSumRangeMonths.style.opacity = '0'
-loanTimeRangeDays.style.opacity = '1'
-loanTimeRangeMonths.style.opacity = '0'
-loanSumMock.innerText = `${formattedMinLoanAmount} ₽`
-setDateSpanText(getFormattedDate(getFirstPickerDay()))
 
 const isMonthRangeActive = () => loanSumRangeDays.style.opacity === '0'
 const isDaysRangeActive = () => loanSumRangeMonths.style.opacity === '0'
@@ -103,11 +102,6 @@ loanTimeText.onblur = () => {
   loanTimeMock.style.display = 'block'
 }
 
-// Изменение текста кнопки
-const setButtonText = (value) => {
-  confirmButton.innerText = `ПОЛУЧИТЬ ${numberWithSpaces(value)} ₽`
-}
-
 // Изменение текста мока суммы
 const setSumText = (value) => {
   loanSumMock.innerText = `${numberWithSpaces(value)} ₽`
@@ -122,13 +116,13 @@ const setTimeText = (value) => {
   let dateForSelect
   if (isDaysRangeActive()) {
     dateForSelect = addDays(loanTimeText.value)
-    loanTimeLabel.innerText = 'Срок займа'
-    loanTimeLabel.style.width = '80px'
+    loanTimeLabel.innerText = LOAN_TIME_DAYS_LABEL_TEXT
+    loanTimeLabel.style.width = LOAN_TIME_DAYS_LABEL_WIDTH
     picker.setDate(dateForSelect)
   } else {
     dateForSelect = addMonths(loanTimeText.value)
-    loanTimeLabel.innerText = 'Срок займа в месяцах'
-    loanTimeLabel.style.width = '160px'
+    loanTimeLabel.innerText = LOAN_TIME_MONTHS_LABEL_TEXT
+    loanTimeLabel.style.width = LOAN_TIME_MONTHS_LABEL_WIDTH
   }
   setDateSpanText(getFormattedDate(dateForSelect))
 }
@@ -188,15 +182,15 @@ const setMonthsRanges = (value) => {
 
 // Переключение табов
 const setFirstTabActive = (value) => {
-  firstTab.classList.add('little-loan')
-  secondTab.classList.remove('large-loan')
-  confirmButton.classList.remove('large-loan')
+  firstTab.classList.add(LITTLE_LOAN_CLASS_NAME)
+  secondTab.classList.remove(LARGE_LOAN_CLASS_NAME)
+  confirmButton.classList.remove(LARGE_LOAN_CLASS_NAME)
   setDaysRanges(value)
 }
 const setSecondTabActive = (value) => {
-  firstTab.classList.remove('little-loan')
-  secondTab.classList.add('large-loan')
-  confirmButton.classList.add('large-loan')
+  firstTab.classList.remove(LITTLE_LOAN_CLASS_NAME)
+  secondTab.classList.add(LARGE_LOAN_CLASS_NAME)
+  confirmButton.classList.add(LARGE_LOAN_CLASS_NAME)
   setMonthsRanges(value)
 }
 
@@ -353,3 +347,11 @@ const picker = datepicker(datePickerNode, {
   maxDate: getLastPickerDay(),
   dateSelected: getFirstPickerDay()
 })
+
+// INIT-значения
+const formattedMinLoanAmount = numberWithSpaces(MIN_LOAN_AMOUNT)
+setButtonText(formattedMinLoanAmount)
+firstTab.classList.add(LITTLE_LOAN_CLASS_NAME)
+setLeftInputsActive()
+setSumText(formattedMinLoanAmount)
+setDateSpanText(getFormattedDate(getFirstPickerDay()))
