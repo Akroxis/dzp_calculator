@@ -1,0 +1,98 @@
+@import './vars';
+
+.#{$namespace}-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  &__tab {
+    background-color: transparent;
+    border: 0;
+
+    position: relative;
+
+    font-family: inherit;
+    font-size: 1em;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    flex: 1 1 50%;
+
+    height: 3.5em;
+    padding-bottom: 0;
+    padding-top: 0;
+
+    padding-right: 1em;
+    padding-left: 0.75em;
+
+    cursor: pointer;
+
+    &:after {
+      background-color: #dadae0;
+      transform: scaleX(0);
+
+      transition: transform 0.25s ease-in-out,
+        background-color 0.25s ease-in-out;
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      display: block;
+      height: 4px;
+
+      content: '';
+    }
+
+    &:hover {
+      &:after {
+        transform: scaleX(1);
+      }
+    }
+
+    &.active {
+      &:after {
+        transform: scaleX(1);
+      }
+    }
+
+    &:first-child {
+      &:after {
+        transform-origin: right center;
+      }
+
+      &.active {
+        &:after {
+          background-color: $green;
+        }
+      }
+    }
+
+    &:last-child {
+      &:after {
+        transform-origin: left center;
+      }
+
+      &.active {
+        &:after {
+          background-color: $yellow;
+        }
+      }
+    }
+
+    img {
+      margin-right: 0.5em;
+      margin-left: auto;
+    }
+
+    span {
+      margin-right: auto;
+
+      white-space: nowrap;
+    }
+  }
+}

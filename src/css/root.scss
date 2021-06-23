@@ -1,0 +1,15 @@
+@import './vars';
+
+.#{$namespace}-root {
+  width: 100%;
+
+  &__header {
+    background-color: #f6f5f9;
+
+    padding-right: 2em;
+    padding-left: 2em;
+
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+}
