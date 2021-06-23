@@ -1,5 +1,3 @@
-import { throttle } from 'throttle-debounce';
-
 /**
  * Оборачивает собственную реализацию ползунка ввода, чтобы предоставить на
  * уровень бизнес-логики свойства `setValue` и обработку события через
@@ -40,8 +38,11 @@ export default class RangeInput {
     this.progressElement = this.findElement('data-range-progress');
     this.trackElement = this.findElement('data-range-track');
 
+    this.trackElement.addEventListener('touchstart', this.handleTouchStart);
     this.trackElement.addEventListener('mousedown', this.handleMouseDown);
+    window.addEventListener('touchmove', this.handleTouchMove);
     window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchend', this.handleTouchEnd);
     window.addEventListener('mouseup', this.handleMouseUp);
   }
 
@@ -53,17 +54,38 @@ export default class RangeInput {
   };
 
   /**
+   * Обрабатывает событие начала касания.
+   */
+  handleTouchStart = (event) => {
+    this.handleStart(event.touches[0].clientX);
+  };
+
+  /**
    * Обрабатывает событие перемещения курсора.
    */
-  handleMouseMove = throttle(250, (event) => {
+  handleMouseMove = (event) => {
     this.handleMove(event.clientX);
-  });
+  };
+
+  /**
+   * Обрабатывает событие движения касания.
+   */
+  handleTouchMove = (event) => {
+    this.handleMove(event.touches[0].clientX);
+  };
 
   /**
    * Обрабатывает событие окончания перемещения курсора.
    */
-  handleMouseUp = (event) => {
-    this.handleEnd(event.clientX);
+  handleMouseUp = () => {
+    this.handleEnd();
+  };
+
+  /**
+   * Обрабатывает событие окончания касания.
+   */
+  handleTouchEnd = () => {
+    this.handleEnd();
   };
 
   /**

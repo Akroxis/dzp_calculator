@@ -15,8 +15,9 @@ export default class AmountRange extends Range {
   /**
    * @inheritdoc
    */
-  setParamCurrent(param) {
-    this.params.setAmount(param);
+  setParamCurrent(amount) {
+    const roundedAmount = ParamsHelper.roundAmount(amount);
+    this.params.setAmount(roundedAmount);
   }
 
   /**

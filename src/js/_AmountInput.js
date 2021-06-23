@@ -22,7 +22,8 @@ export default class AmountInput extends Input {
   /**
    * @inheritdoc
    */
-  setParam(value) {
-    this.params.setAmount(value);
+  setParam(amount) {
+    const roundedAmount = ParamsHelper.roundAmount(amount, this.params.amount);
+    this.params.setAmount(roundedAmount);
   }
 }

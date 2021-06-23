@@ -94,9 +94,8 @@ export default class Params {
    * @param {Number} nextAmount Новая сумма займа.
    */
   setAmount(nextAmount) {
-    const roundedAmount = ParamsHelper.roundAmount(nextAmount, this.amount);
-    const nextType = ParamsHelper.getNextTypeByAmount(this.type, roundedAmount);
-    this.setParams(nextType, roundedAmount, this.period);
+    const nextType = ParamsHelper.getNextTypeByAmount(this.type, nextAmount);
+    this.setParams(nextType, nextAmount, this.period);
   }
 
   /**
@@ -104,8 +103,7 @@ export default class Params {
    * @param {Number} nextPeriod Новый срок займа.
    */
   setPeriod(nextPeriod) {
-    const roundedPeriod = ParamsHelper.roundPeriod(nextPeriod, this.period);
-    const nextType = ParamsHelper.getNextTypeByPeriod(this.type, roundedPeriod);
-    this.setParams(nextType, this.amount, roundedPeriod);
+    const nextType = ParamsHelper.getNextTypeByPeriod(this.type, nextPeriod);
+    this.setParams(nextType, this.amount, nextPeriod);
   }
 }

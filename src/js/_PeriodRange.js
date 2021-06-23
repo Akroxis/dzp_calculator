@@ -15,8 +15,9 @@ export default class PeriodRange extends Range {
   /**
    * @inheritdoc
    */
-  setParamCurrent(param) {
-    this.params.setPeriod(param);
+  setParamCurrent(period) {
+    const roundedPeriod = ParamsHelper.roundPeriod(period);
+    this.params.setPeriod(roundedPeriod);
   }
 
   /**

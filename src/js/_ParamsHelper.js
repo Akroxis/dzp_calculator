@@ -137,11 +137,15 @@ export default class ParamsHelper {
    * @param {Number} amount Сумма займа.
    * @param {Number} currentAmount Сумма займа, выбранная в данный момент.
    */
-  static roundAmount(amount, currentAmount = 0) {
+  static roundAmount(amount, currentAmount = null) {
     let nextAmount = amount / 1000;
 
-    nextAmount =
-      currentAmount < amount ? Math.ceil(nextAmount) : Math.floor(nextAmount);
+    if (currentAmount == null) {
+      nextAmount = Math.round(nextAmount);
+    } else {
+      nextAmount =
+        currentAmount < amount ? Math.ceil(nextAmount) : Math.floor(nextAmount);
+    }
 
     nextAmount *= 1000;
 
@@ -153,15 +157,19 @@ export default class ParamsHelper {
    * @param {Number} period Срок займа.
    * @param {Number} currentPeriod Срок займа, выбранный в данный момент.
    */
-  static roundPeriod(period, currentPeriod = 0) {
+  static roundPeriod(period, currentPeriod = null) {
     if (period <= 30) {
       return period;
     }
 
     let nextPeriod = period / 30;
 
-    nextPeriod =
-      currentPeriod < period ? Math.ceil(nextPeriod) : Math.floor(nextPeriod);
+    if (currentPeriod == null) {
+      nextPeriod = Math.round(nextPeriod);
+    } else {
+      nextPeriod =
+        currentPeriod < period ? Math.ceil(nextPeriod) : Math.floor(nextPeriod);
+    }
 
     nextPeriod *= 30;
 

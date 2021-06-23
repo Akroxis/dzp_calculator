@@ -30,6 +30,7 @@ export default class PeriodInput extends Input {
       period *= 30;
     }
 
-    this.params.setPeriod(period);
+    const roundedPeriod = ParamsHelper.roundPeriod(period, this.params.period);
+    this.params.setPeriod(roundedPeriod);
   }
 }
