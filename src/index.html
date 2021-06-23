@@ -13,6 +13,7 @@
 
   <style type="text/css">
     html {
+      background-color: teal;
       font-family: Roboto, sans;
       font-size: 16px;
     }
@@ -23,58 +24,70 @@
   <div class="dzp-calc-root">
     <div class="dzp-calc-root__header dzp-calc-tabs">
       <button type="button" class="dzp-calc-tabs__tab" id="calc_pdl_tab">
-        <img src="./assets/icons/little_loan.svg" alt="">
+        <img src="./assets/icons/little_loan.svg" alt="pdl">
         <span>До 20 000 ₽</span>
       </button>
 
       <button type="button" class="dzp-calc-tabs__tab" id="calc_installment_tab">
-        <img src="./assets/icons/large_loan.svg" alt="">
+        <img src="./assets/icons/large_loan.svg" alt="installment">
         <span>До 100 000 ₽</span>
       </button>
     </div>
 
-    <div class="inputs-wrapper">
-      <div class="inputs-container" id="calculator_inputs">
-        <div class="calculator-input">
-          <label for="calc_amount_input" class="calculator-input__label">Сумма займа</label>
-          <input type="text" class="calculator-input__text" id="calc_amount_input" maxlength="6">
-          <input type="range" id="calc_amount_range" name="loanSum" class="input__range">
-        </div>
 
-        <div class="calculator-input">
-          <label for="calc_period_input" class="calculator-input__label time__label" id="loanTimeLabel">Срок
-            займа</label>
-          <div class="date-calculator-input__text_row">
-            <input type="text" class="calculator-input__text" id="calc_period_input">
-            <span id="loanTimeMock" class="calculator-input__mock"></span>
-            <div class="datepicker-container">
-              <span id="date-value"></span>
-              <img id="datePicker-input" src="./assets/icons/calendar.svg" alt="">
+    <div class="dzp-calc-root__content dzp-calc-content">
+      <div class="dzp-calc-content__row dzp-calc-input">
+        <label for="calc_amount_input" class="dzp-calc-input__label">
+          Сумма займа
+        </label>
+        <input type="text" class="dzp-calc-input__input" id="calc_amount_input" inputmode="numeric">
+        <div class="dzp-calc-range" id="calc_amount_range">
+          <div class="dzp-calc-range__inner" data-range-track="">
+            <div class="dzp-calc-range__line" data-range-progress="">
+              <button type="button" class="dzp-calc-range__button"></button>
             </div>
           </div>
-          <input type="range" id="calc_period_range" name="loanSum" class="input__range">
         </div>
+      </div>
 
-        <a class="calculator__button" id="calc_submit_button">Получить 8 000 ₽</a>
+      <div class="dzp-calc-content__row dzp-calc-input">
+        <label for="calc_period_input" class="dzp-calc-input__label">
+          Срок займа
+        </label>
+        <input type="text" class="dzp-calc-input__input" id="calc_period_input" inputmode="numeric">
+        <div class="dzp-calc-range" id="calc_period_range">
+          <div class="dzp-calc-range__inner" data-range-track="">
+            <div class="dzp-calc-range__line" data-range-progress="">
+              <button type="button" class="dzp-calc-range__button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="/" class="dzp-calc-content__row dzp-calc-submit-button" id="calc_submit_button">
+        Получить 8 000 ₽
+      </a>
+    </div>
+
+    <div class="dzp-calc-root__footer dzp-calc-footer">
+      <div class="dzp-calc-footer__item">
+        <div class="dzp-calc-info">
+          <span class="dzp-calc-info__title">До получения займа</span>
+          <div class="dzp-calc-info__value">
+            <img src="./assets/icons/clock.svg" alt="">
+            <span id="calc_countdown">15:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="dzp-calc-footer__item">
+        <div class="dzp-calc-info">
+          <span class="dzp-calc-info__title">Сегодня получили займ</span>
+          <span class="dzp-calc-info__value" id="calc_clients_count">1878 клиентов</span>
+        </div>
       </div>
     </div>
 
   </div>
-
-  <div class="calculator-footer">
-    <div class="calculator-footer__item">
-      <span class="footer__item__title">До получения займа</span>
-      <div class="footer__countdown">
-        <img src="./assets/icons/clock.svg" alt="" class="calculator-content__icon">
-        <span id="time_countdown" class="footer__item__text">15:00</span>
-      </div>
-    </div>
-    <div class="calculator-footer__item">
-      <span class="footer__item__title">Сегодня получили займ</span>
-      <span id="users_count" class="footer__item__text">1878 клиентов</span>
-    </div>
-  </div>
-
 
   <script src="./index.js"></script>
 </body>

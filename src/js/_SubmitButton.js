@@ -1,5 +1,7 @@
+import ElementClass from './_ElementClass';
 import ParamsHelper from './_ParamsHelper';
 import HrefHelper from './_HrefHelper';
+import Type from './_Type';
 
 /**
  * Предоставляет обёртку для ссылки на получение займа.
@@ -38,7 +40,7 @@ export default class SubmitButton {
   };
 
   /**
-   * Обновляет адрес ссылки.
+   * Обновляет адрес ссылки и классы ссылки.
    */
   updateHref() {
     this.element.href = HrefHelper.get(
@@ -51,5 +53,14 @@ export default class SubmitButton {
     const text = `Получить ${amount}`;
 
     this.element.innerHTML = text;
+
+    this.element.classList.remove(ElementClass.INSTALLMENT);
+    this.element.classList.remove(ElementClass.PDL);
+
+    if (this.params.type === Type.INSTALLMENT) {
+      this.element.classList.add(ElementClass.INSTALLMENT);
+    } else {
+      this.element.classList.add(ElementClass.PDL);
+    }
   }
 }

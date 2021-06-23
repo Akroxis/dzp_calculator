@@ -1,0 +1,121 @@
+@import './vars';
+
+.#{$namespace}-range {
+  position: relative;
+
+  font-size: getEm(16px);
+
+  user-select: none;
+
+  &__inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: getEm(24px);
+    width: 100%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    &:hover {
+      .#{$namespace}-range {
+        &__button,
+        &__line:before {
+          background-color: $lightgreen;
+        }
+      }
+    }
+
+    &:active {
+      .#{$namespace}-range {
+        &__button,
+        &__line:before {
+          background-color: $darkgreen;
+        }
+      }
+    }
+  }
+
+  &__line {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    transition: width 0.05s ease-in-out;
+
+    &:before {
+      transition: background-color 0.25s ease-in-out;
+      background-color: $green;
+
+      border-bottom-left-radius: 4px;
+
+      position: absolute;
+      top: 50%;
+      left: 0;
+
+      display: block;
+      height: 2px;
+      width: 100%;
+
+      margin-top: -1px;
+
+      content: '';
+    }
+  }
+
+  &__button {
+    transition: background-color 0.25s ease-in-out;
+    background-color: $green;
+
+    padding: 0;
+    border: 0;
+
+    position: absolute;
+    transform: translateX(50%);
+    top: 0;
+    right: 0;
+
+    border-radius: getEm(24px);
+    box-sizing: border-box;
+
+    font-size: inherit;
+
+    display: block;
+    height: getEm(24px);
+    width: getEm(24px);
+
+    cursor: pointer;
+  }
+
+  &.installment {
+    .#{$namespace}-range {
+      &__button,
+      &__line:before {
+        background-color: $yellow;
+      }
+    }
+
+    &:hover {
+      .#{$namespace}-range {
+        &__button,
+        &__line:before {
+          background-color: $lightyellow;
+        }
+      }
+    }
+
+    &:active {
+      .#{$namespace}-range {
+        &__button,
+        &__line:before {
+          background-color: $darkyellow;
+        }
+      }
+    }
+  }
+}

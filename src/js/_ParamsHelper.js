@@ -1,3 +1,4 @@
+import TextHelper from './_TextHelper';
 import Type from './_Type';
 
 /**
@@ -271,31 +272,13 @@ export default class ParamsHelper {
    * @param {Number} period Срок займа.
    */
   static formatPeriod(period) {
-    const plural = (number, one, two, many) => {
-      if (number >= 11 && number <= 20) {
-        return many;
-      }
-
-      const digit = number % 10;
-
-      if (digit === 1) {
-        return one;
-      }
-
-      if (digit >= 2 && digit <= 4) {
-        return two;
-      }
-
-      return many;
-    };
-
     if (period <= 30) {
-      const unit = plural(period, 'день', 'дня', 'дней');
+      const unit = TextHelper.getPlural(period, 'день', 'дня', 'дней');
       return `${period} ${unit}`;
     }
 
     const months = Math.round(period / 30);
-    const unit = plural(months, 'месяц', 'месяца', 'месяцев');
+    const unit = TextHelper.getPlural(months, 'месяц', 'месяца', 'месяцев');
     return `${months} ${unit}`;
   }
 

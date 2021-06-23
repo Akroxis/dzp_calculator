@@ -1,0 +1,25 @@
+@import './vars';
+
+.#{$namespace}-footer {
+  position: relative;
+
+  padding-bottom: getEm(16px);
+  padding-top: getEm(16px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__item {
+    padding-right: getEm(8px);
+    padding-left: getEm(8px);
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import ElementClass from './_ElementClass';
+import RangeInput from './_RangeInput';
 import Type from './_Type';
 
 /**
@@ -23,6 +24,12 @@ export default class Range {
   element = null;
 
   /**
+   * Обёртка пользовательского ползунка ввода.
+   * @var RangeInput
+   */
+  input = null;
+
+  /**
    * Параметры займа.
    * @var Params
    */
@@ -42,13 +49,12 @@ export default class Range {
     this.element = element;
     this.params = params;
 
-    this.element.min = this.MIN_VALUE;
-    this.element.max = this.MAX_VALUE;
-    this.element.addEventListener('change', this.handleChange);
-
     this.params.onChange(this.handleParamsChange);
 
-    this.element.value = this.getValue();
+    this.input = new RangeInput(this.element);
+    this.input.onChange(this.handleChange);
+
+    this.input.setValue(this.getValue());
     this.updateClass();
   }
 
@@ -56,15 +62,14 @@ export default class Range {
    * Обрабатывает изменение параметров займа.
    */
   handleParamsChange = () => {
-    this.element.value = this.getValue();
+    this.input.setValue(this.getValue());
     this.updateClass();
   };
 
   /**
    * Обрабатывает изменение значения ползунка.
    */
-  handleChange = () => {
-    const value = Number(this.element.value);
+  handleChange = (value) => {
     this.setParam(value);
     this.updateClass();
   };

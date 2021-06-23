@@ -36,6 +36,16 @@ const ElementId = {
    * Ссылка на получение займа.
    */
   SUBMIT_BUTTON: 'calc_submit_button',
+
+  /**
+   * Блок с обратным отсчётом.
+   */
+  COUNTDOWN: 'calc_countdown',
+
+  /**
+   * Блок с количеством клиентов.
+   */
+  CLIENTS_COUNT: 'calc_clients_count',
 };
 
 export default ElementId;

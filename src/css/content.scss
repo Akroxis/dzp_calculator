@@ -1,0 +1,16 @@
+@import './vars';
+
+.#{$namespace}-content {
+  position: relative;
+
+  padding-bottom: getEm(24px);
+  padding-top: getEm(24px);
+
+  &__row {
+    margin-top: getEm(24px);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

@@ -12,7 +12,8 @@
     position: relative;
 
     font-family: inherit;
-    font-size: 1em;
+    font-size: getEm(16px);
+    color: $black;
 
     display: flex;
     flex-direction: row;
@@ -25,13 +26,13 @@
     padding-bottom: 0;
     padding-top: 0;
 
-    padding-right: 1em;
-    padding-left: 0.75em;
+    padding-right: getEm(12px);
+    padding-left: getEm(12px);
 
     cursor: pointer;
 
     &:after {
-      background-color: #dadae0;
+      background-color: $grey;
       transform: scaleX(0);
 
       transition: transform 0.25s ease-in-out,
@@ -85,7 +86,7 @@
     }
 
     img {
-      margin-right: 0.5em;
+      margin-right: getEm(8px);
       margin-left: auto;
     }
 

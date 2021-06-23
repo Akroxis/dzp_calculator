@@ -1,4 +1,19 @@
 $namespace: 'dzp-calc';
 
+$lightyellow: #ffd333;
 $yellow: #ffc800;
+$darkyellow: #cca000;
+
+$lightgreen: #79c480;
 $green: #57b560;
+$darkgreen: #46914d;
+
+$grey: #dadae0;
+$dimgrey: #757575;
+
+$white: #fff;
+$black: #4e4e64;
+
+@function getEm($size, $fontSize: 16px) {
+  @return $size / $fontSize * 1em;
+}
