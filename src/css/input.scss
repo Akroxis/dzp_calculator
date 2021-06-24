@@ -32,7 +32,7 @@
     display: block;
     width: 100%;
 
-    $offsetX: (64px - 24px * 1.25) / 2;
+    $offsetX: (64px - 24px * 1.25) * 0.5;
 
     padding-bottom: getEm($offsetX, 24px);
     padding-top: getEm($offsetX, 24px);

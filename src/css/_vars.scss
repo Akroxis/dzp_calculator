@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $namespace: 'dzp-calc';
 
 $lightyellow: #ffd333;
@@ -15,5 +17,5 @@ $white: #fff;
 $black: #4e4e64;
 
 @function getEm($size, $fontSize: 16px) {
-  @return $size / $fontSize * 1em;
+  @return math.div($size, $fontSize) * 1em;
 }

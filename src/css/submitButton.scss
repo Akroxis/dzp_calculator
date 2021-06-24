@@ -10,7 +10,7 @@
 
   transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
 
-  $offsetX: (56px - 16px * 1.25) / 2;
+  $offsetX: (56px - 16px * 1.25) * 0.5;
 
   padding-bottom: getEm($offsetX);
   padding-top: getEm($offsetX);
