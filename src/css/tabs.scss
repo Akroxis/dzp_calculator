@@ -5,6 +5,10 @@
   flex-direction: row;
   justify-content: space-around;
 
+  @include horizontal() {
+    justify-content: flex-start;
+  }
+
   &__tab {
     background-color: transparent;
     border: 0;
@@ -94,6 +98,18 @@
       margin-right: auto;
 
       white-space: nowrap;
+    }
+
+    @include horizontal() {
+      flex: 0 0 auto;
+
+      &:last-child {
+        margin-left: getEm(16px);
+
+        @media screen and (max-width: 768px) {
+          margin-left: 0;
+        }
+      }
     }
   }
 }
