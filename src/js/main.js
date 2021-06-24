@@ -6,6 +6,7 @@ import AmountRange from './AmountRange';
 import PeriodInput from './PeriodInput';
 import PeriodRange from './PeriodRange';
 import Countdown from './Countdown';
+import DateInput from './DateInput';
 import Params from './Params';
 import Type from './Type';
 import Tabs from './Tabs';
@@ -44,6 +45,12 @@ export default function main() {
 
   if (periodRange) {
     new PeriodRange(periodRange, params);
+  }
+
+  const dateInput = document.getElementById(ElementId.DATE_INPUT);
+
+  if (dateInput) {
+    new DateInput(dateInput, params);
   }
 
   const installmentTab = document.getElementById(ElementId.INSTALLMENT_TAB);

@@ -23,6 +23,11 @@ const ElementId = {
   PERIOD_RANGE: 'calc_period_range',
 
   /**
+   * Блок выбора даты.
+   */
+  DATE_INPUT: 'calc_date_input',
+
+  /**
    * Вкладка INSTALLMENT-займа.
    */
   INSTALLMENT_TAB: 'calc_installment_tab',

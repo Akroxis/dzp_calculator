@@ -6,6 +6,11 @@
   border: 1px solid $grey;
   border-radius: 4px;
 
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
   &__label {
     background-color: #fff;
 
@@ -42,5 +47,9 @@
     font-size: getEm(24px);
     line-height: 1.25;
     color: $black;
+  }
+
+  &__adornment {
+    padding-right: getEm(14px);
   }
 }

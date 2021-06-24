@@ -28,7 +28,7 @@ export default class ParamsHelper {
   /**
    * Срок PDL-займа по умолчанию.
    */
-  static DEFAULT_PDL_PERIOD = 7;
+  static DEFAULT_PDL_PERIOD = 15;
 
   /**
    * Минимальная сумма INSTALLMENT-займа.

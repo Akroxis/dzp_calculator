@@ -26,4 +26,31 @@ export default class TextHelper {
 
     return many;
   }
+
+  /**
+   * Дополняет строковое представление указанного числа ведущими нулями до тех
+   * пор, пока длина итоговой строки не станет равна переданному значению.
+   * @param {Number} number Число.
+   * @param {Number} length Нужная длина строки.
+   */
+  static prependByZero(number, length = 2) {
+    let result = String(number);
+
+    while (result.length < length) {
+      result = `0${result}`;
+    }
+
+    return result;
+  }
+
+  /**
+   * Возвращает строковое представление даты.
+   * @param {Date} date Дата.
+   */
+  static stringifyDate(date) {
+    const year = this.prependByZero(date.getFullYear());
+    const month = this.prependByZero(date.getMonth() + 1);
+    const day = this.prependByZero(date.getDate());
+    return `${day}.${month}.${year}`;
+  }
 }

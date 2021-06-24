@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>Title</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <link rel="stylesheet" href="./index.scss">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,11 +39,13 @@
 
     <div class="dzp-calc-root__content dzp-calc-content">
       <div class="dzp-calc-content__row dzp-calc-input">
-        <label for="calc_amount_input" class="dzp-calc-input__label">
-          Сумма займа
-        </label>
-        <input type="text" class="dzp-calc-input__input" id="calc_amount_input" inputmode="numeric">
-        <div class="dzp-calc-range" id="calc_amount_range">
+        <div class="dzp-calc-input__inner">
+          <label for="calc_amount_input" class="dzp-calc-input__label">
+            Сумма займа
+          </label>
+          <input type="text" class="dzp-calc-input__input" id="calc_amount_input" inputmode="numeric">
+        </div>
+        <div class="dzp-calc-input__aside dzp-calc-range" id="calc_amount_range">
           <div class="dzp-calc-range__inner" data-range-track="">
             <div class="dzp-calc-range__line" data-range-progress="">
               <button type="button" class="dzp-calc-range__button"></button>
@@ -51,11 +55,21 @@
       </div>
 
       <div class="dzp-calc-content__row dzp-calc-input">
-        <label for="calc_period_input" class="dzp-calc-input__label">
-          Срок займа
-        </label>
-        <input type="text" class="dzp-calc-input__input" id="calc_period_input" inputmode="numeric">
-        <div class="dzp-calc-range" id="calc_period_range">
+        <div class="dzp-calc-input__inner">
+          <label for="calc_period_input" class="dzp-calc-input__label">
+            Срок займа
+          </label>
+          <input type="text" class="dzp-calc-input__input" id="calc_period_input" inputmode="numeric">
+          <div class="dzp-calc-input__adornment">
+            <button type="button" class="dzp-calc-date" id="calc_date_input">
+              <span class="dzp-calc-date__text" data-date-text="">01.01.2020</span>
+              <img class="dzp-calc-date__icon" data-date-icon="" src="assets/calendar.svg" />
+              <span class="dzp-calc-date__backdrop"></span>
+              <span class="dzp-calc-date__dialog" data-date-dialog=""></span>
+            </button>
+          </div>
+        </div>
+        <div class="dzp-calc-input__aside dzp-calc-range" id="calc_period_range">
           <div class="dzp-calc-range__inner" data-range-track="">
             <div class="dzp-calc-range__line" data-range-progress="">
               <button type="button" class="dzp-calc-range__button"></button>
