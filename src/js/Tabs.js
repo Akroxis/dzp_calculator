@@ -1,6 +1,6 @@
-import ElementClass from './_ElementClass';
-import Params from './_Params';
-import Type from './_Type';
+import ElementClass from './ElementClass';
+import Params from './Params';
+import Type from './Type';
 
 /**
  * Предоставляет обёртку над вкладками с типами займа.

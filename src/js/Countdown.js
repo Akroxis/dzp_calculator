@@ -1,4 +1,4 @@
-import StorageKey from './_StorageKey';
+import StorageKey from './StorageKey';
 
 /**
  * Предоставляет обёртку над таймером обратного отсчёта.

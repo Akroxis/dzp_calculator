@@ -1,6 +1,6 @@
-import ElementClass from './_ElementClass';
-import RangeInput from './_RangeInput';
-import Type from './_Type';
+import ElementClass from './ElementClass';
+import RangeInput from './RangeInput';
+import Type from './Type';
 
 /**
  * Представляет обёртку над ползунком ввода суммы или срока займа.

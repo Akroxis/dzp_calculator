@@ -1,5 +1,5 @@
-import ParamsHelper from './_ParamsHelper';
-import Input from './_Input';
+import ParamsHelper from './ParamsHelper';
+import Input from './Input';
 
 /**
  * Предоставляет обёртку над полем ввода суммы займа.

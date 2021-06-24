@@ -1,5 +1,5 @@
-import Type from './_Type';
-import ParamsHelper from './_ParamsHelper';
+import Type from './Type';
+import ParamsHelper from './ParamsHelper';
 
 /**
  * Параметры, выбранные на калькуляторе в данный момент.

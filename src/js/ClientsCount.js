@@ -1,4 +1,4 @@
-import TextHelper from './_TextHelper';
+import TextHelper from './TextHelper';
 
 /**
  * Предоставляет обёртку над блоком количества клиентов.

@@ -1,6 +1,6 @@
-import ParamsHelper from './_ParamsHelper';
-import Input from './_Input';
-import Type from './_Type';
+import ParamsHelper from './ParamsHelper';
+import Input from './Input';
+import Type from './Type';
 
 /**
  * Предоставляет обёртку над полем ввода срока займа.

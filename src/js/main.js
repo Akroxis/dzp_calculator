@@ -1,14 +1,14 @@
-import ElementId from './_ElementId';
-import ClientsCount from './_ClientsCount';
-import SubmitButton from './_SubmitButton';
-import AmountInput from './_AmountInput';
-import AmountRange from './_AmountRange';
-import PeriodInput from './_PeriodInput';
-import PeriodRange from './_PeriodRange';
-import Countdown from './_Countdown';
-import Params from './_Params';
-import Type from './_Type';
-import Tabs from './_Tabs';
+import ElementId from './ElementId';
+import ClientsCount from './ClientsCount';
+import SubmitButton from './SubmitButton';
+import AmountInput from './AmountInput';
+import AmountRange from './AmountRange';
+import PeriodInput from './PeriodInput';
+import PeriodRange from './PeriodRange';
+import Countdown from './Countdown';
+import Params from './Params';
+import Type from './Type';
+import Tabs from './Tabs';
 
 /**
  * Инициализирует калькулятор.

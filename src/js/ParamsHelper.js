@@ -1,5 +1,5 @@
-import TextHelper from './_TextHelper';
-import Type from './_Type';
+import TextHelper from './TextHelper';
+import Type from './Type';
 
 /**
  * Содержит набор методов для работы с калькулятором займа.

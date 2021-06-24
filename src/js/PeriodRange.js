@@ -1,5 +1,5 @@
-import ParamsHelper from './_ParamsHelper';
-import Range from './_Range';
+import ParamsHelper from './ParamsHelper';
+import Range from './Range';
 
 /**
  * Предоставляет обёртку для ползунка выбора срока займа.

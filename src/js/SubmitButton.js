@@ -1,7 +1,7 @@
-import ElementClass from './_ElementClass';
-import ParamsHelper from './_ParamsHelper';
-import HrefHelper from './_HrefHelper';
-import Type from './_Type';
+import ElementClass from './ElementClass';
+import ParamsHelper from './ParamsHelper';
+import HrefHelper from './HrefHelper';
+import Type from './Type';
 
 /**
  * Предоставляет обёртку для ссылки на получение займа.
