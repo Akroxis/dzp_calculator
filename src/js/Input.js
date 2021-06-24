@@ -14,6 +14,21 @@ export default class Input {
   params = null;
 
   /**
+   * Текущее значение поля ввода.
+   */
+  value = null;
+
+  /**
+   * Текущая позиция начала выделения в поле ввода.
+   */
+  selectionStart = 0;
+
+  /**
+   * Текущая позиция конца выделения в поле ввода.
+   */
+  selectionEnd = 0;
+
+  /**
    * Создаёт экземпляр класса для указанного элемента.
    * @param {HTMLInputElement} element Элемент поля ввода.
    * @param {Params} params Текущие параметры займа.
@@ -28,7 +43,10 @@ export default class Input {
 
     this.params.onChange(this.handleParamsChange);
 
-    this.element.value = this.getFormattedValue(this.params);
+    this.value = this.getFormattedValue(this.params);
+    this.element.value = this.value;
+
+    this.disableNonNumbersInput();
   }
 
   /**
@@ -74,23 +92,12 @@ export default class Input {
   };
 
   /**
-   * Обрабатывает событие изменения значения поля ввода.
-   * @param {Event} event Событие.
-   */
-  handleChange = (event) => {
-    const { value } = event.target;
-
-    if (!/^\d*$/.test(value)) {
-      event.preventDefault();
-    }
-  };
-
-  /**
    * Обрабатывает событие получения полем фокуса.
    * @param {Event} event Событие.
    */
   handleFocus = () => {
-    this.element.value = this.getRawValue(this.params);
+    this.value = this.getRawValue(this.params);
+    this.element.value = this.value;
   };
 
   /**
@@ -99,6 +106,49 @@ export default class Input {
    */
   handleBlur = () => {
     const value = Number(this.element.value || '0');
+
+    if (Number.isNaN(value)) {
+      return;
+    }
+
     this.setParam(value);
   };
+
+  /**
+   * Обрабатывает изменение содержимого поля ввода.
+   */
+  handleInput = () => {
+    if (/^\d*$/.test(this.element.value)) {
+      this.selectionStart = this.element.selectionStart;
+      this.selectionEnd = this.element.selectionEnd;
+      this.value = this.element.value;
+    } else if (this.value != null) {
+      this.element.value = this.value;
+      this.element.setSelectionRange(this.selectionStart, this.selectionEnd);
+    } else {
+      this.element.value = '';
+    }
+  };
+
+  /**
+   * Блокирует ввод недопустимых символов.
+   */
+  disableNonNumbersInput() {
+    const events = [
+      'input',
+      'keydown',
+      'keyup',
+      'mousedown',
+      'mouseup',
+      'select',
+      'contextmenu',
+      'drop',
+    ];
+
+    const { length } = events;
+
+    for (let i = 0; i < length; i += 1) {
+      this.element.addEventListener(events[i], this.handleInput);
+    }
+  }
 }

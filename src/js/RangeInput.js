@@ -38,12 +38,24 @@ export default class RangeInput {
     this.progressElement = this.findElement('data-range-progress');
     this.trackElement = this.findElement('data-range-track');
 
-    this.trackElement.addEventListener('touchstart', this.handleTouchStart);
-    this.trackElement.addEventListener('mousedown', this.handleMouseDown);
-    window.addEventListener('touchmove', this.handleTouchMove);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchend', this.handleTouchEnd);
-    window.addEventListener('mouseup', this.handleMouseUp);
+    this.trackElement.addEventListener('touchstart', this.handleTouchStart, {
+      passive: true,
+    });
+    this.trackElement.addEventListener('mousedown', this.handleMouseDown, {
+      passive: true,
+    });
+    window.addEventListener('touchmove', this.handleTouchMove, {
+      passive: true,
+    });
+    window.addEventListener('mousemove', this.handleMouseMove, {
+      passive: true,
+    });
+    window.addEventListener('touchend', this.handleTouchEnd, {
+      passive: true,
+    });
+    window.addEventListener('mouseup', this.handleMouseUp, {
+      passive: true,
+    });
   }
 
   /**
