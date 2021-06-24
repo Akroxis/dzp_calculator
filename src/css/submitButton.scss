@@ -1,0 +1,50 @@
+@import './vars';
+
+.#{$namespace}-submit-button {
+  background-color: $green;
+
+  display: block;
+
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+
+  $offsetX: (56px - 16px * 1.25) * 0.5;
+
+  padding-bottom: getEm($offsetX);
+  padding-top: getEm($offsetX);
+  padding-right: getEm(16px);
+  padding-left: getEm(16px);
+
+  font-weight: bold;
+  font-size: getEm(16px);
+  letter-spacing: 1px;
+  line-height: 1.25;
+  color: $white;
+
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+
+  &:hover {
+    background-color: $lightgreen;
+  }
+
+  &:active {
+    background-color: $darkgreen;
+  }
+
+  &.installment {
+    background-color: $yellow;
+    color: $black;
+
+    &:hover {
+      background-color: $lightyellow;
+    }
+
+    &:active {
+      background-color: $darkyellow;
+    }
+  }
+}

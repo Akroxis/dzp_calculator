@@ -1,0 +1,55 @@
+@import './vars';
+
+.#{$namespace}-input {
+  position: relative;
+
+  border: 1px solid $grey;
+  border-radius: 4px;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__label {
+    background-color: #fff;
+
+    position: absolute;
+    top: getEm(7px, 14px) * -1;
+    left: 4px;
+
+    display: block;
+
+    padding-right: 4px;
+    padding-left: 4px;
+
+    font-size: getEm(14px);
+    line-height: 1;
+    color: $dimgrey;
+  }
+
+  &__input {
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 0;
+    outline: none;
+
+    display: block;
+    width: 100%;
+
+    $offsetX: (64px - 24px * 1.25) * 0.5;
+
+    padding-bottom: getEm($offsetX, 24px);
+    padding-top: getEm($offsetX, 24px);
+    padding-right: getEm(14px, 24px);
+    padding-left: getEm(14px, 24px);
+
+    font-size: getEm(24px);
+    line-height: 1.25;
+    color: $black;
+  }
+
+  &__adornment {
+    padding-right: getEm(14px);
+  }
+}

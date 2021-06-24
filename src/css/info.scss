@@ -1,0 +1,33 @@
+@import './vars';
+
+.#{$namespace}-info {
+  position: relative;
+
+  &__title {
+    display: block;
+
+    color: $dimgrey;
+
+    font-size: getEm(14px);
+    line-height: 1.25;
+  }
+
+  &__value {
+    display: flex;
+    align-items: center;
+
+    margin-top: getEm(6px, 22px);
+
+    font-size: getEm(22px);
+    color: $black;
+
+    white-space: nowrap;
+
+    img {
+      display: block;
+      height: 100%;
+
+      margin-right: getEm(8px, 22px);
+    }
+  }
+}
