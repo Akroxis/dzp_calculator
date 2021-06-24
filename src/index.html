@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <div class="dzp-calc-root">
+  <div class="dzp-calc-root dzp-calc-root--horizontal">
     <div class="dzp-calc-root__header dzp-calc-tabs">
       <button type="button" class="dzp-calc-tabs__tab" id="calc_pdl_tab">
         <img src="./assets/little_loan.svg" alt="pdl">
@@ -38,7 +38,7 @@
 
 
     <div class="dzp-calc-root__content dzp-calc-content">
-      <div class="dzp-calc-content__row dzp-calc-input">
+      <div class="dzp-calc-content__item dzp-calc-input">
         <div class="dzp-calc-input__inner">
           <label for="calc_amount_input" class="dzp-calc-input__label">
             Сумма займа
@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="dzp-calc-content__row dzp-calc-input">
+      <div class="dzp-calc-content__item dzp-calc-input">
         <div class="dzp-calc-input__inner">
           <label for="calc_period_input" class="dzp-calc-input__label">
             Срок займа
@@ -78,8 +78,10 @@
         </div>
       </div>
 
-      <a href="/" class="dzp-calc-content__row dzp-calc-submit-button" id="calc_submit_button">
-        Получить 8 000 ₽
+      <a href="/" class="dzp-calc-content__item dzp-calc-submit-button" id="calc_submit_button">
+        <span data-submit-text="">
+          Получить 8 000 ₽
+        </span>
       </a>
     </div>
 

@@ -6,10 +6,24 @@
   padding-bottom: getEm(24px);
   padding-top: getEm(24px);
 
-  &__row {
+  @include horizontal() {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: getEm(24px);
+
+    @media screen and (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
     margin-top: getEm(24px);
 
     &:first-child {
+      margin-top: 0;
+    }
+
+    @include horizontal() {
       margin-top: 0;
     }
   }

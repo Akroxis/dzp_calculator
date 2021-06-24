@@ -11,7 +11,13 @@ export default class SubmitButton {
    * Элемент ссылки.
    * @var HTMLAnchorElement
    */
-  element = null;
+  rootElement = null;
+
+  /**
+   * Элемент, в котором расположен текст ссылки.
+   * @var HTMLSpanElement
+   */
+  textElement = null;
 
   /**
    * Параметры займа.
@@ -25,8 +31,10 @@ export default class SubmitButton {
    * @param {Params} params Параметры займа.
    */
   constructor(element, params) {
-    this.element = element;
+    this.rootElement = element;
     this.params = params;
+
+    this.textElement = this.findElement('data-submit-text');
 
     this.params.onChange(this.handleParamsChange);
     this.updateHref();
@@ -40,10 +48,18 @@ export default class SubmitButton {
   };
 
   /**
+   * Возвращает дочерний элемент компонента.
+   * @param {String} attribute Название атрибута.
+   */
+  findElement(attribute) {
+    return this.rootElement.querySelector(`[${attribute}]`);
+  }
+
+  /**
    * Обновляет адрес ссылки и классы ссылки.
    */
   updateHref() {
-    this.element.href = HrefHelper.get(
+    this.rootElement.href = HrefHelper.get(
       this.params.type,
       this.params.amount,
       this.params.period
@@ -51,16 +67,15 @@ export default class SubmitButton {
 
     const amount = ParamsHelper.formatAmount(this.params.amount);
     const text = `Получить ${amount}`;
+    this.textElement.innerHTML = text;
 
-    this.element.innerHTML = text;
-
-    this.element.classList.remove(ElementClass.INSTALLMENT);
-    this.element.classList.remove(ElementClass.PDL);
+    this.rootElement.classList.remove(ElementClass.INSTALLMENT);
+    this.rootElement.classList.remove(ElementClass.PDL);
 
     if (this.params.type === Type.INSTALLMENT) {
-      this.element.classList.add(ElementClass.INSTALLMENT);
+      this.rootElement.classList.add(ElementClass.INSTALLMENT);
     } else {
-      this.element.classList.add(ElementClass.PDL);
+      this.rootElement.classList.add(ElementClass.PDL);
     }
   }
 }

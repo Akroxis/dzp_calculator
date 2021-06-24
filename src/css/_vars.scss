@@ -19,3 +19,9 @@ $black: #4e4e64;
 @function getEm($size, $fontSize: 16px) {
   @return math.div($size, $fontSize) * 1em;
 }
+
+@mixin horizontal() {
+  @at-root .#{$namespace}-root--horizontal & {
+    @content;
+  }
+}
