@@ -94,7 +94,7 @@ export default function main() {
     new ValueAssembler(50000, ParamsHelper.MAX_INSTALLMENT_PERIOD, Type.INSTALLMENT, params)
   }
   if(window.location.pathname.includes('product/zajm-na-6-mesyatsev')) {
-    new ValueAssembler(50000, ParamsHelper.MAX_INSTALLMENT_PERIOD, Type.INSTALLMENT, params)
+    new ValueAssembler(50000, ParamsHelper.MAX_INSTALLMENT_PERIOD / 2, Type.INSTALLMENT, params)
   }
   if(window.location.pathname.includes('product/mikrozajmy-na-god')) {
     new ValueAssembler(50000, ParamsHelper.MAX_INSTALLMENT_PERIOD, Type.INSTALLMENT, params)
